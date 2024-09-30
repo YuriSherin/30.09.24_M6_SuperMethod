@@ -6,14 +6,12 @@ class Horse:
     def __init__(self):
         self.x_distance = 0
         self.sound = 'Frrr'
-        super().__init__()
 
     def run(self, dx):
         """Метод увеличивает x_distance на dx, где dx - изменение дистанции"""
         if not isinstance(dx, (int, float)):
-            raise TypeError("Операнд должен иметь тип 'int' или 'float'")
-        else:
-            self.x_distance += dx
+            raise TypeError("Операнд dx должен иметь тип 'int' или 'float'")
+        self.x_distance += dx
 
 class Eagle:
     """Класс орла"""
@@ -27,22 +25,27 @@ class Eagle:
     def fly(self, dy):
         """Метод увеличивает y_distance на dy, где dy - изменение дистанции"""
         if not isinstance(dy, (int, float)):
-            raise TypeError("Операнд должен иметь тип 'int' или 'float'")
-        else:
-            self.y_distance += dy
+            raise TypeError("Операнд dy должен иметь тип 'int' или 'float'")
+        self.y_distance += dy
 
 class Pegasus(Horse, Eagle):
     """Класс Пегаса"""
     def __init__(self):
-        super().__init__()
+        """Метод инициализирует дочерний класс Pegasus
+        и вызывает инициализаторы базовых классов родителей в порядке наследования"""
+        Horse.__init__(self)
+        Eagle.__init__(self)
 
     def move(self, dx, dy):     # где dx и dy изменения дистанции
         """Метод запускает наследованные методы run и fly соответственно"""
-        if not isinstance(dx, (int, float)) and not isinstance(dy, (int, float)):
-            raise TypeError("Операнд должен иметь тип 'int' или 'float'")
-        else:
-            self.run(dx)
-            self.fly(dy)
+        if not isinstance(dx, (int, float)):
+            raise TypeError("Операнд dx должен иметь тип 'int' или 'float'")
+        if not isinstance(dy, (int, float)):
+            raise TypeError("Операнд dy должен иметь тип 'int' или 'float'")
+        self.run(dx)
+        self.fly(dy)
+
+
 
     def get_pos(self):
         """Метод возвращает текущее положение пегаса в виде кортежа - (x_distance, y_distance)
